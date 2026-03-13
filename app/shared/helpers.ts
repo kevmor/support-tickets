@@ -7,6 +7,20 @@ export function formatDate(d: Date | null) {
   });
 }
 
+// exported sort configuration used by both the UI and data layer
+export const SORT_COLUMNS: Record<string, string> = {
+  id: "t.id",
+  title: "t.title",
+  priority: "t.priority",
+  status: "t.status",
+  kerberos_requester: "t.kerberos_requester",
+  created: "t.created",
+  last_comment_date: "last_comment_date", // this is a subquery alias
+  category: "category_sort", // alias added in SELECT via MIN(c.name)
+};
+
+export const SORT_DIRS = new Set(["asc", "desc"]);
+
 export const STATUS_MAP: Record<number, { label: string; className: string }> =
   {
     1: {

@@ -4,9 +4,11 @@ import NavSidebar from "./components/NavSidebar";
 import { Mada } from "next/font/google";
 import "./globals.css";
 import HelpRequestButton from "./components/HelpRequestButton";
+import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const mada = Mada({
-  variable: "--font-mada",
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
@@ -21,7 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={mada.variable}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("font-sans", mada.variable)}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -42,14 +48,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className="bg-white text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100"
-      >
-        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-zinc-200 bg-white/80 px-3 py-2 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
+      <body className="bg-background text-foreground antialiased">
+        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-zinc-200 bg-white/80 px-3 py-2 backdrop-blur dark:border-zinc-800 dark:bg-zinc-100/10">
           <div className="flex items-center gap-2">
             <NavSidebar />
-            <span className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
-              CPL Tickets
+            <span className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+              Support Tickets
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -58,6 +62,7 @@ export default function RootLayout({
           </div>
         </header>
         {children}
+        <Toaster />
       </body>
     </html>
   );

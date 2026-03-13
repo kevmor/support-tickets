@@ -1,6 +1,6 @@
 import { fetchTickets } from "@/app/lib/tickets";
 
-const ticketData = await fetchTickets();
+const { tickets: ticketData } = await fetchTickets();
 
 export default function TicketList() {
   return (

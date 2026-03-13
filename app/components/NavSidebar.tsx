@@ -131,7 +131,7 @@ export default function NavSidebar() {
         {/* Sidebar header */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-4 dark:border-zinc-800">
           <span className="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
-            CPL Tickets
+            Tickets
           </span>
           <button
             onClick={() => setOpen(false)}
@@ -188,7 +188,7 @@ export default function NavSidebar() {
         {/* Footer */}
         <div className="border-t border-zinc-200 px-4 py-3 dark:border-zinc-800">
           <p className="text-xs text-zinc-400 dark:text-zinc-600">
-            CPL Ticket Portal
+            Ticket Portal
           </p>
         </div>
       </aside>

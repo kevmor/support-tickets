@@ -1,31 +1,60 @@
 import StatCard from "./components/StatCard";
+import { fetchCategories } from "./lib/references";
 import { fetchTicketStats } from "./lib/ticketStats";
 import TicketList from "@/app/components/TicketList";
 import { fetchTickets } from "@/app/lib/tickets";
+import { Button } from "@/components/ui/button";
 
-const PER_PAGE = 20;
+const PER_PAGE = 10;
 const MIN_PRIORITY = 0;
-const STATUS = 2;
 
-export default async function Home({
+export default async function Dashboard({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    status?: string;
+    category?: string;
+    sort?: string;
+    dir?: string;
+    show?: string;
+    search?: string;
+  }>;
 }) {
-  const { page: pageParam } = await searchParams;
+  const {
+    page: pageParam,
+    status: statusParam,
+    category: categoryParam,
+    sort: sortParam,
+    dir: dirParam,
+    show: showParam,
+    search: searchParam,
+  } = await searchParams;
   const currentPage = Math.max(1, Number(pageParam) || 1);
+  const perPage = Number(showParam) || PER_PAGE;
+  // const status = statusParam || 2; // default to "Open"
 
   const [stats, { tickets: recentTickets, total: recentTotal }] =
     await Promise.all([
       fetchTicketStats(),
       fetchTickets(
-        { status: STATUS, minPriority: MIN_PRIORITY },
+        {
+          minPriority: MIN_PRIORITY,
+          category: categoryParam,
+          status: statusParam,
+          sort: sortParam,
+          dir: dirParam,
+          search: searchParam,
+        },
         currentPage,
-        PER_PAGE,
+        perPage,
       ),
     ]);
+
+  const categories = await fetchCategories();
+
   return (
-    <main className="mx-auto max-w-7xl space-y-6 p-6">
+    <main className="mx-auto space-y-6 p-6">
       {/* Page heading */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
@@ -134,6 +163,7 @@ export default async function Home({
         total={recentTotal}
         page={currentPage}
         perPage={PER_PAGE}
+        categories={categories}
       />
     </main>
   );
